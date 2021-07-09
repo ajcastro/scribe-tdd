@@ -32,7 +32,30 @@ abstract class TestCase extends BaseTestCase
 
 ### Step 3: Set the necessary strategies
 ```php
-// TODO:
+    'strategies' => [
+        'metadata' => [
+            // ...
+            AjCastro\ScribeTdd\Extracting\Strategies\Metadata\GetFromDocBlocksFromScribeTdd::class,
+        ],
+        'urlParameters' => [
+            // ...
+        ],
+        'queryParameters' => [
+            // ...
+        ],
+        'headers' => [
+            // ...
+        ],
+        'bodyParameters' => [
+            // ...
+        ],
+        'responses' => [
+            // ...
+        ],
+        'responseFields' => [
+            // ...
+        ],
+    ],
 ```
 
 ## Usage
