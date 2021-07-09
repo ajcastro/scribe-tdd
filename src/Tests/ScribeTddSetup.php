@@ -3,6 +3,7 @@
 namespace AjCastro\ScribeTdd\Tests;
 
 use AjCastro\ScribeTdd\Exceptions\LaravelNotPresent;
+use Illuminate\Support\Facades\File;
 
 trait ScribeTddSetup
 {
@@ -17,18 +18,16 @@ trait ScribeTddSetup
         }
 
         $this->afterApplicationCreated(function () {
-            dump('making example...');
             $this->makeExample();
         });
 
         $this->beforeApplicationDestroyed(function () {
-            dump('writing examples...');
             $instances = ExampleCreator::getInstances();
             foreach ($instances as $instance) {
-                dump($instance->toArray());
+                File::makeDirectory($instance->writeDir($instance->route), 0755, true, true);
+                File::put($instance->writePath(), $instance->toJson());
             }
             ExampleCreator::flushInstances();
-            // $this->saveExampleStatus();
         });
     }
 

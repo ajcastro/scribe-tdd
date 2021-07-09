@@ -2,13 +2,14 @@
 
 namespace AjCastro\ScribeTdd\Tests;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Routing\Route;
-use Illuminate\Support\Str;
 use AjCastro\ScribeTdd\Tests\ExampleRequest;
 use AjCastro\ScribeTdd\Tests\Traits\SetProps;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Str;
 
-class ExampleCreator implements Arrayable
+class ExampleCreator implements Arrayable, Jsonable
 {
     use SetProps;
 
@@ -17,14 +18,14 @@ class ExampleCreator implements Arrayable
     public $testMethod;
     public $providedData;
     public $dataName;
+    public Route $route;
 
-    private Route $route;
     private $exampleRequests;
     private $test;
 
     public static $currentInstance;
 
-    public static $instances;
+    public static $instances = [];
 
     public function __construct(array $props)
     {
@@ -53,6 +54,11 @@ class ExampleCreator implements Arrayable
         $parts = array_merge($parts, $route->methods);
 
         return implode(',',  $parts);
+    }
+
+    public static function writeDir(Route $route)
+    {
+        return storage_path('scribe-tdd/'.static::normalizeUriForInstanceKey($route));
     }
 
     public static function getInstanceForRoute($route)
@@ -100,9 +106,9 @@ class ExampleCreator implements Arrayable
         return $this->normalizeUriForInstanceKey($this->route);
     }
 
-    public function writeDir()
+    public function writePath()
     {
-        return storage_path('scribe/'.$this->instanceKey());
+        return static::writeDir($this->route).'/'.$this->id.'.json';
     }
 
     public function toArray()
@@ -119,27 +125,44 @@ class ExampleCreator implements Arrayable
                 'name'    => $this->route->getName(),
                 'methods' => $this->route->methods,
             ],
+            'url_params'   => $this->mergeUrlParams(),
+            'query_params' => $this->mergeQueryParams(),
+            'body_params'  => $this->mergeBodyParams(),
+            'responses'    => $this->mergeResponses(),
         ];
     }
 
-    public function mergeParamsExample($type)
+    public function toJson($options = 0)
     {
-        $method = 'get'.ucfirst($type).'ParamsExample';
-        $results = [];
+        return json_encode($this->toArray(), $options);
+    }
 
-        foreach ($exampleRequests as $request) {
-            $results = array_merge($results, $request->{$method}());
-        }
+    protected function mergeUrlParams()
+    {
+        return [];
+    }
 
-        return $results;
+    protected function mergeQueryParams()
+    {
+        return [];
+    }
+
+    protected function mergeBodyParams()
+    {
+        return [];
+    }
+
+    protected function mergeResponses()
+    {
+        return [];
     }
 
     public function writeExampleRequests()
     {
         return [
-            'urlParam' => [],
-            'queryParam' => [],
-            'bodyParam' => [],
+            'urlParams' => [],
+            'queryParams' => [],
+            'bodyParams' => [],
             'responses' => [
                 [
                     'status' => 200,
