@@ -1,0 +1,25 @@
+{
+    "name": "ajcastro/scribe-tdd",
+    "description": "Scribe's test-driven documentation approach.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ajcastro",
+            "email": "ajcastro29@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "AjCastro\\ScribeTdd\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AjCastro\\ScribeTdd\\ScribeTddServiceProvider"
+            ]
+        }
+    }
+}
