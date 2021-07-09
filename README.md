@@ -45,11 +45,15 @@ used for generating scribe documentation later.
 phpunit
 ```
 
-
 ### Step 2: Run scribe:generate
 ```
 php artisan scribe:generate
 ```
+
+## Sample Usage
+
+Here is a sample project where it uses the tdd approach:
+[https://github.com/ajcastro/TheSideProjectAPI/pull/1](https://github.com/ajcastro/TheSideProjectAPI/pull/1)
 
 ## Acknowledgement
 This package is inspired from [Enlighten](https://github.com/stydeNet/enlighten/).
