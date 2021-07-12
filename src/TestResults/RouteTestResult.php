@@ -32,9 +32,9 @@ class RouteTestResult
             $array = json_decode($json, true);
             $result = $result + $array;
 
-            $result['url_params'] = array_merge($result['url_params'], $array['url_params']);
-            $result['query_params'] = array_merge($result['query_params'], $array['query_params']);
-            $result['body_params'] = array_merge($result['body_params'], $array['body_params']);
+            $result['url_params'] = $result['url_params'] + $array['url_params'];
+            $result['query_params'] = $result['query_params'] + $array['query_params'];
+            $result['body_params'] = $result['body_params'] + $array['body_params'];
             $result['responses'] = array_merge($result['responses'], $array['responses']);
         }
 
