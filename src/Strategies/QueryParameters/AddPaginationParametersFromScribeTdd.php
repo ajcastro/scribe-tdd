@@ -4,11 +4,14 @@ namespace AjCastro\ScribeTdd\Strategies\QueryParameters;
 
 use AjCastro\ScribeTdd\TestResults\RouteTestResult;
 use Knuckles\Camel\Extraction\ExtractedEndpointData;
+use Knuckles\Scribe\Extracting\ParamHelpers;
 use Knuckles\Scribe\Extracting\RouteDocBlocker;
 use Knuckles\Scribe\Extracting\Strategies\Strategy;
 
 class AddPaginationParametersFromScribeTdd extends Strategy
 {
+    use ParamHelpers;
+
     public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
