@@ -25,7 +25,7 @@ trait ScribeTddSetup
             $instances = ExampleCreator::getInstances();
             foreach ($instances as $instance) {
                 File::makeDirectory($instance->writeDir($instance->route), 0755, true, true);
-                File::put($instance->writePath(), $instance->toJson());
+                File::put($instance->writePath(), $instance->toJson(JSON_PRETTY_PRINT));
             }
             ExampleCreator::flushInstances();
         });
@@ -36,8 +36,8 @@ trait ScribeTddSetup
         $exampleCreator = new ExampleCreator([
             'test'         => $this,
             'testMethod'   => $this->getName(false),
-            'providedData' => $this->getProvidedData(),
             'dataName'     => $this->dataName(),
+            'providedData' => $this->getProvidedData(),
         ]);
 
         ExampleCreator::setCurrentInstance($exampleCreator);

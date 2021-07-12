@@ -16,8 +16,8 @@ class ExampleCreator implements Arrayable, Jsonable
     public $id;
     public $testClass;
     public $testMethod;
-    public $providedData;
     public $dataName;
+    public $providedData;
     public Route $route;
 
     private $exampleRequests;
@@ -126,8 +126,8 @@ class ExampleCreator implements Arrayable, Jsonable
             'id'            => $this->id,
             'test_class'    => $this->testClass,
             'test_method'   => $this->testMethod,
-            'provided_data' => $this->providedData,
             'data_name'     => $this->dataName,
+            'provided_data' => $this->providedData,
             'key'           => $this->instanceKey(),
             'route' => [
                 'uri'     => $this->route->uri,
