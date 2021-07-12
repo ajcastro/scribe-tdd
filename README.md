@@ -35,25 +35,34 @@ abstract class TestCase extends BaseTestCase
     'strategies' => [
         'metadata' => [
             // ...
-            AjCastro\ScribeTdd\Extracting\Strategies\Metadata\GetFromDocBlocksFromScribeTdd::class,
+            AjCastro\ScribeTdd\Strategies\Metadata\GetFromDocBlocksFromScribeTdd::class,
         ],
         'urlParameters' => [
             // ...
+            Strategies\UrlParameters\GetFromUrlParamTag::class,
+            AjCastro\ScribeTdd\Strategies\UrlParameters\GetFromUrlParamTagFromScribeTdd::class,
         ],
         'queryParameters' => [
             // ...
+            AjCastro\ScribeTdd\Strategies\QueryParameters\GetFromQueryParamTagFromScribeTdd::class,
+            AjCastro\ScribeTdd\Strategies\QueryParameters\AddPaginationParametersFromScribeTdd::class,
         ],
         'headers' => [
             // ...
+            AjCastro\ScribeTdd\Strategies\Headers\GetFromHeaderTagFromScribeTdd::class,
         ],
         'bodyParameters' => [
             // ...
+            AjCastro\ScribeTdd\Strategies\BodyParameters\GetFromBodyParamTagFromScribeTdd::class,
         ],
         'responses' => [
             // ...
+            AjCastro\ScribeTdd\Strategies\Responses\UseResponseTagFromScribeTdd::class,
+            AjCastro\ScribeTdd\Strategies\Responses\UseResponseFileTagFromScribeTdd::class,
         ],
         'responseFields' => [
             // ...
+            AjCastro\ScribeTdd\Strategies\ResponseFields\GetFromResponseFieldTagFromScribeTdd::class,
         ],
     ],
 ```
