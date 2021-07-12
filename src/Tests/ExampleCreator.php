@@ -36,7 +36,13 @@ class ExampleCreator implements Arrayable, Jsonable
 
     public static function makeId(self $instance)
     {
-        return str_replace('\\', '~', $instance->testClass).'--'.$instance->testMethod;
+        $parts = array_filter([
+            str_replace('\\', '~', $instance->testClass),
+            $instance->testMethod,
+            $instance->dataName,
+        ]);
+
+        return implode('--', $parts);
     }
 
     public static function getCurrentInstance()
