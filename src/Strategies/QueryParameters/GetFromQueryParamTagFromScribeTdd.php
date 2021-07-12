@@ -1,13 +1,13 @@
 <?php
 
-namespace AjCastro\ScribeTdd\Extracting\Strategies\UrlParameters;
+namespace AjCastro\ScribeTdd\Strategies\QueryParameters;
 
 use AjCastro\ScribeTdd\TestResults\RouteTestResult;
 use Knuckles\Camel\Extraction\ExtractedEndpointData;
 use Knuckles\Scribe\Extracting\RouteDocBlocker;
-use Knuckles\Scribe\Extracting\Strategies\UrlParameters\GetFromUrlParamTag;
+use Knuckles\Scribe\Extracting\Strategies\QueryParameters\GetFromQueryParamTag;
 
-class GetFromUrlParamTagFromScribeTdd extends GetFromUrlParamTag
+class GetFromQueryParamTagFromScribeTdd extends GetFromQueryParamTag
 {
     public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
     {
@@ -25,6 +25,6 @@ class GetFromUrlParamTagFromScribeTdd extends GetFromUrlParamTag
             $testResult['test_method'],
         ]);
 
-        return $this->getUrlParametersFromDocBlock($methodDocBlock->getTags());
+        return $this->getQueryParametersFromDocBlock($methodDocBlock->getTags());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace AjCastro\ScribeTdd\Extracting\Strategies\QueryParameters;
+namespace AjCastro\ScribeTdd\Strategies\QueryParameters;
 
 use AjCastro\ScribeTdd\TestResults\RouteTestResult;
 use Knuckles\Camel\Extraction\ExtractedEndpointData;

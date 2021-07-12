@@ -1,15 +1,15 @@
 <?php
 
-namespace AjCastro\ScribeTdd\Extracting\Strategies\QueryParameters;
+namespace AjCastro\ScribeTdd\Strategies\Metadata;
 
 use AjCastro\ScribeTdd\TestResults\RouteTestResult;
 use Knuckles\Camel\Extraction\ExtractedEndpointData;
 use Knuckles\Scribe\Extracting\RouteDocBlocker;
-use Knuckles\Scribe\Extracting\Strategies\QueryParameters\GetFromQueryParamTag;
+use Knuckles\Scribe\Extracting\Strategies\Metadata\GetFromDocBlocks;
 
-class GetFromQueryParamTagFromScribeTdd extends GetFromQueryParamTag
+class GetFromDocBlocksFromScribeTdd extends GetFromDocBlocks
 {
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 
@@ -19,12 +19,13 @@ class GetFromQueryParamTagFromScribeTdd extends GetFromQueryParamTag
 
         [
             'method' => $methodDocBlock,
+            'class' => $classDocBlock,
         ]
         = RouteDocBlocker::getDocBlocks($endpointData->route, [
             $testResult['test_class'],
             $testResult['test_method'],
         ]);
 
-        return $this->getQueryParametersFromDocBlock($methodDocBlock->getTags());
+        return $this->getMetadataFromDocBlock($methodDocBlock, $classDocBlock);
     }
 }
