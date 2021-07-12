@@ -57,9 +57,10 @@ class ExampleCreator implements Arrayable, Jsonable
 
     public static function normalizeUriForInstanceKey(Route $route)
     {
-        $parts = [
-            str_replace('/', '~', $route->uri)
-        ];
+        $uri = str_replace('/', '~', $route->uri);
+        $uri = str_replace('?', '.', $uri);
+
+        $parts = [$uri];
         $parts = array_merge($parts, $route->methods);
 
         return implode(',',  $parts);
@@ -146,43 +147,36 @@ class ExampleCreator implements Arrayable, Jsonable
         return json_encode($this->toArray(), $options);
     }
 
+    protected function mergeData($type)
+    {
+        $results = [];
+
+        $method = 'get'.ucfirst($type);
+
+        foreach ($this->exampleRequests as $request) {
+            $results = $results + $request->{$method}();
+        }
+
+        return $results;
+    }
+
     protected function mergeUrlParams()
     {
-        return [];
+        return $this->mergeData('urlParams');
     }
 
     protected function mergeQueryParams()
     {
-        return [];
+        return $this->mergeData('queryParams');
     }
 
     protected function mergeBodyParams()
     {
-        return [];
+        return $this->mergeData('bodyParams');
     }
 
     protected function mergeResponses()
     {
-        return [];
-    }
-
-    public function writeExampleRequests()
-    {
-        return [
-            'urlParams' => [],
-            'queryParams' => [],
-            'bodyParams' => [],
-            'responses' => [
-                [
-                    'status' => 200,
-                    'scenario' => 'test_user_should_return_user',
-                    'data' => [],
-                ], [
-                    'status' => 404,
-                    'scenario' => 'test_user_not_found',
-                    'data' => [],
-                ],
-            ],
-        ];
+        return $this->mergeData('response');
     }
 }
