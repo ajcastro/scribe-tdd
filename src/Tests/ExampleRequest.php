@@ -2,6 +2,7 @@
 
 namespace AjCastro\ScribeTdd\Tests;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ExampleRequest
@@ -10,30 +11,65 @@ class ExampleRequest
     public $request;
     public $response;
 
-    public function __construct($request, $response)
+    public function __construct(Request $request, $response)
     {
         $this->id = (string) Str::orderedUuid();
         $this->request = $request;
         $this->response = $response;
     }
 
-    public function getUrlParamsExample()
+    public function getUrlParams()
     {
-        return [];
+        return collect($this->request->route()->parameters())->map(function ($value, $key) {
+            $value = method_exists($value, 'getKey') ? $value->getKey() : $value;
+            return [
+                'type' =>   gettype($value),
+                'description' => '',
+                'example' => $value,
+                'required' => $this->isUrlParamRequired($key),
+            ];
+        })->all();
     }
 
-    public function getQueryParamsExample()
+    private function isUrlParamRequired($key)
     {
-        return [];
+        return Str::contains($this->request->route()->uri, '{'.$key.'}');
     }
 
-    public function getBodyParamsExample()
+    public function getQueryParams()
     {
-        return $this->request->all();
+        return collect()->wrap($this->request->query->all())->map([$this, 'mapParams'])->all();
+    }
+
+    public function getBodyParams()
+    {
+        return collect()->wrap($this->request->request->all())->map([$this, 'mapParams'])->all();
+    }
+
+    public function mapParams($value)
+    {
+        if (is_array($value) && !empty($value)) {
+            $value = head($value);
+
+            return [
+                'type' =>   gettype($value).'[]',
+                'description' => '',
+                'example' => [$value],
+                'required' => false,
+            ];
+        }
+
+        return [
+            'type' =>   gettype($value),
+            'description' => '',
+            'example' => $value,
+            'required' => false,
+        ];
     }
 
     public function getResponse()
     {
+        return [];
         return $this->response->getContent();
     }
 }
