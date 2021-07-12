@@ -76,6 +76,7 @@ abstract class TestCase extends BaseTestCase
         ],
     ],
 ```
+It is up to you if you want to disable existing default strategies or just add these strategies so you can enjoy both worlds.
 
 ## Usage
 
