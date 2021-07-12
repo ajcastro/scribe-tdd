@@ -47,13 +47,14 @@ abstract class TestCase extends BaseTestCase
         ],
         'urlParameters' => [
             // ...
-            Strategies\UrlParameters\GetFromUrlParamTag::class,
+            AjCastro\ScribeTdd\Strategies\UrlParameters\GetFromTestResult::class,
             AjCastro\ScribeTdd\Strategies\UrlParameters\GetFromUrlParamTagFromScribeTdd::class,
         ],
         'queryParameters' => [
             // ...
-            AjCastro\ScribeTdd\Strategies\QueryParameters\GetFromQueryParamTagFromScribeTdd::class,
+            AjCastro\ScribeTdd\Strategies\QueryParameters\GetFromTestResult::class,
             AjCastro\ScribeTdd\Strategies\QueryParameters\AddPaginationParametersFromScribeTdd::class,
+            AjCastro\ScribeTdd\Strategies\QueryParameters\GetFromQueryParamTagFromScribeTdd::class,
         ],
         'headers' => [
             // ...
@@ -61,10 +62,12 @@ abstract class TestCase extends BaseTestCase
         ],
         'bodyParameters' => [
             // ...
+            AjCastro\ScribeTdd\Strategies\BodyParameters\GetFromTestResult::class,
             AjCastro\ScribeTdd\Strategies\BodyParameters\GetFromBodyParamTagFromScribeTdd::class,
         ],
         'responses' => [
             // ...
+            AjCastro\ScribeTdd\Strategies\Responses\GetFromTestResult::class,
             AjCastro\ScribeTdd\Strategies\Responses\UseResponseTagFromScribeTdd::class,
             AjCastro\ScribeTdd\Strategies\Responses\UseResponseFileTagFromScribeTdd::class,
         ],
