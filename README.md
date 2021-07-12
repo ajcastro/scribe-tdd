@@ -47,7 +47,6 @@ abstract class TestCase extends BaseTestCase
         ],
         'urlParameters' => [
             // ...
-            AjCastro\ScribeTdd\Strategies\UrlParameters\GetFromTestResult::class,
             AjCastro\ScribeTdd\Strategies\UrlParameters\GetFromUrlParamTagFromScribeTdd::class,
         ],
         'queryParameters' => [
