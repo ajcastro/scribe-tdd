@@ -177,6 +177,12 @@ class ExampleCreator implements Arrayable, Jsonable
 
     protected function mergeResponses()
     {
-        return $this->mergeData('response');
+        $results = [];
+
+        foreach ($this->exampleRequests as $request) {
+            $results[] = $request->getResponse();
+        }
+
+        return $results;
     }
 }

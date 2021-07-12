@@ -69,7 +69,11 @@ class ExampleRequest
 
     public function getResponse()
     {
-        return [];
-        return $this->response->getContent();
+        return [
+            'status' => $this->response->getStatusCode(),
+            'headers' => $this->response->headers->all(),
+            'description' => '',
+            'content' => $this->response->getContent(),
+        ];
     }
 }
