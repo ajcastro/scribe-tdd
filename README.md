@@ -4,9 +4,9 @@
 
 # Benefits
 
-- Better workflow, instead of writing docblock annotations and parameters in controller, you can auto-generate documentation from the tests performed.
-- Less comments cluttering in controllers. Some annotations are still needed but annotations can be put in the test classes instead.
-- Easy to document controllers which methods are inherited from base controllers by putting docblocks in the test methods.
+- Better workflow, instead of writing docblock annotations for parameters in controller, you can auto-generate documentation from the tests performed.
+- Less comments cluttering in controllers. Some annotations are still needed (like @group) but annotations can be put in the test classes instead.
+- Easy to document controllers which methods are inherited from base controllers or traits by putting docblocks in the test methods.
 - Follows the principle "If it is not tested, it does not exist.". This makes sure your docs and tests are in sync.
 
 
