@@ -30,10 +30,13 @@ class ExampleCreator implements Arrayable, Jsonable
     public function __construct(array $props)
     {
         $this->setProps($props);
-
-        $this->id = (string) Str::orderedUuid();
-
         $this->testClass = get_class($this->test);
+        $this->id = static::makeId($this);
+    }
+
+    public static function makeId(self $instance)
+    {
+        return str_replace('\\', '~', $instance->testClass).'--'.$instance->testMethod;
     }
 
     public static function getCurrentInstance()
@@ -41,7 +44,7 @@ class ExampleCreator implements Arrayable, Jsonable
         return static::$currentInstance;
     }
 
-    public static function setCurrentInstance($instance)
+    public static function setCurrentInstance(self $instance)
     {
         static::$currentInstance = $instance;
     }
@@ -72,7 +75,7 @@ class ExampleCreator implements Arrayable, Jsonable
         return static::registerInstance($instance);
     }
 
-    protected static function registerInstance($instance)
+    protected static function registerInstance(self $instance)
     {
         return static::$instances[$instance->instanceKey()] = $instance;
     }
