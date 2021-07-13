@@ -27,10 +27,15 @@ class RouteTestResult
     public static function loadTestResults($dir)
     {
         $result = [];
-        foreach(File::files($dir) as $file) {
-            $json = File::get($file->getPathname());
-            $array = json_decode($json, true);
-            $result = $result + $array;
+        $files = File::files($dir);
+        $file = array_shift($files);
+
+        if ($file) {
+            $result = static::decodeFile($file->getPathname());
+        }
+
+        foreach($files as $file) {
+            $array = static::decodeFile($file->getPathname());
 
             $result['url_params'] = $result['url_params'] + $array['url_params'];
             $result['query_params'] = $result['query_params'] + $array['query_params'];
@@ -39,5 +44,10 @@ class RouteTestResult
         }
 
         return $result;
+    }
+
+    public static function decodeFile($filepath)
+    {
+        return json_decode(File::get($filepath), true);
     }
 }
