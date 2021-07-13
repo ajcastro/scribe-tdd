@@ -15,7 +15,7 @@
 
 ### Step 1: Composer Require
 ```
-composer require ajcastro/scribe-tdd
+composer require --dev ajcastro/scribe-tdd
 ```
 
 
