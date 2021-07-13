@@ -4,9 +4,9 @@
 
 # Benefits
 
-- Better workflow, instead of writing docblock annotations and parameters in controller, you can auto-generate documentation from the tests performed.
-- Less comments cluttering in controllers. Some annotations are still needed but annotations can be put in the test classes instead.
-- Easy to document controllers which methods are inherited from base controllers by putting docblocks in the test methods.
+- Better workflow, instead of writing docblock annotations for parameters in controller, you can auto-generate documentation from the tests performed.
+- Less comments cluttering in controllers. Some annotations are still needed (like @group) but annotations can be put in the test classes instead.
+- Easy to document controllers which methods are inherited from base controllers or traits by putting docblocks in the test methods.
 - Follows the principle "If it is not tested, it does not exist.". This makes sure your docs and tests are in sync.
 - It is easy to document responses because it is from the performed tests and does not rely on response calls which sometimes result to errors due to inconsistent database states.
 
@@ -76,6 +76,7 @@ abstract class TestCase extends BaseTestCase
         ],
     ],
 ```
+It is up to you if you want to disable existing default strategies or just add these strategies so you can enjoy both worlds.
 
 ## Usage
 
