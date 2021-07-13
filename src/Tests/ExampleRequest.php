@@ -82,6 +82,10 @@ class ExampleRequest
 
     private static function guessResponseDescription($testMethod)
     {
+        if (Str::startsWith($testMethod, 'test')) {
+            $testMethod = substr($testMethod, 4);
+        }
+
         return str_replace('_', ' ', snake_case($testMethod));
     }
 }
