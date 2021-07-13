@@ -8,7 +8,7 @@
 - Less comments cluttering in controllers. Some annotations are still needed but annotations can be put in the test classes instead.
 - Easy to document controllers which methods are inherited from base controllers by putting docblocks in the test methods.
 - Follows the principle "If it is not tested, it does not exist.". This makes sure your docs and tests are in sync.
-
+- It is easy to document responses because it is from the performed tests and does not rely on response calls which sometimes result to errors due to inconsistent database states.
 
 ## Installation and Setup
 
