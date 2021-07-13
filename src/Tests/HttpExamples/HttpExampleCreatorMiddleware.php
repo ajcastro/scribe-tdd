@@ -15,7 +15,7 @@ class HttpExampleCreatorMiddleware
 
         $exampleCreator = ExampleCreator::getInstanceForRoute($request->route());
 
-        $exampleCreator->addExampleRequest(new ExampleRequest($request, $response));
+        $exampleCreator->addExampleRequest(new ExampleRequest($request, $response, $exampleCreator));
 
         return $response;
     }

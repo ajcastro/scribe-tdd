@@ -3,6 +3,7 @@
 namespace AjCastro\ScribeTdd\Tests;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class ExampleRequest
@@ -10,12 +11,15 @@ class ExampleRequest
     public $id;
     public $request;
     public $response;
+    private $exampleCreator;
 
-    public function __construct(Request $request, $response)
+
+    public function __construct(Request $request, Response $response, ExampleCreator $exampleCreator)
     {
         $this->id = (string) Str::orderedUuid();
         $this->request = $request;
         $this->response = $response;
+        $this->exampleCreator = $exampleCreator;
     }
 
     public function getUrlParams()
@@ -72,8 +76,13 @@ class ExampleRequest
         return [
             'status' => $this->response->getStatusCode(),
             'headers' => $this->response->headers->all(),
-            'description' => '',
+            'description' => static::guessResponseDescription($this->exampleCreator->testMethod),
             'content' => (string) $this->response->getContent(),
         ];
+    }
+
+    private static function guessResponseDescription($testMethod)
+    {
+        return str_replace('_', ' ', snake_case($testMethod));
     }
 }
