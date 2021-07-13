@@ -22,12 +22,7 @@ trait ScribeTddSetup
         });
 
         $this->beforeApplicationDestroyed(function () {
-            $instances = ExampleCreator::getInstances();
-            foreach ($instances as $instance) {
-                File::makeDirectory($instance->writeDir($instance->route), 0755, true, true);
-                File::put($instance->writePath(), $instance->toJson(JSON_PRETTY_PRINT));
-            }
-            ExampleCreator::flushInstances();
+            $this->writeExample();
         });
     }
 
@@ -41,5 +36,15 @@ trait ScribeTddSetup
         ]);
 
         ExampleCreator::setCurrentInstance($exampleCreator);
+    }
+
+    private function writeExample()
+    {
+        $instances = ExampleCreator::getInstances();
+        foreach ($instances as $instance) {
+            File::makeDirectory($instance->writeDir($instance->route), 0755, true, true);
+            File::put($instance->writePath(), $instance->toJson(JSON_PRETTY_PRINT));
+        }
+        ExampleCreator::flushInstances();
     }
 }
