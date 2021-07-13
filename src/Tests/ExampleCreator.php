@@ -180,9 +180,14 @@ class ExampleCreator implements Arrayable, Jsonable
         $results = [];
 
         foreach ($this->exampleRequests as $request) {
-            $results[] = $request->getResponse();
+            $response = $request->getResponse();
+            $description = $response['description'];
+
+            if (!isset($results[$description])) {
+                $results[$description] = $response;
+            }
         }
 
-        return $results;
+        return array_values($results);
     }
 }

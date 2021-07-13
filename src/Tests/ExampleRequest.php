@@ -73,9 +73,9 @@ class ExampleRequest
     public function getResponse()
     {
         return [
-            'status' => $this->response->getStatusCode(),
+            'status' => $statusCode = $this->response->getStatusCode(),
             'headers' => $this->response->headers->all(),
-            'description' => static::guessResponseDescription($this->exampleCreator->testMethod),
+            'description' => $statusCode.', '.static::guessResponseDescription($this->exampleCreator->testMethod),
             'content' => (string) $this->response->getContent(),
         ];
     }
