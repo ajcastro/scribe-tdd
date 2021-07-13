@@ -3,7 +3,6 @@
 namespace AjCastro\ScribeTdd\Tests;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class ExampleRequest
@@ -14,7 +13,7 @@ class ExampleRequest
     private $exampleCreator;
 
 
-    public function __construct(Request $request, Response $response, ExampleCreator $exampleCreator)
+    public function __construct(Request $request, $response, ExampleCreator $exampleCreator)
     {
         $this->id = (string) Str::orderedUuid();
         $this->request = $request;
