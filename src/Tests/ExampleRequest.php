@@ -73,7 +73,7 @@ class ExampleRequest
             'status' => $this->response->getStatusCode(),
             'headers' => $this->response->headers->all(),
             'description' => '',
-            'content' => $this->response->getContent(),
+            'content' => (string) $this->response->getContent(),
         ];
     }
 }
