@@ -26,7 +26,7 @@ class ExampleRequest
         return collect($this->request->route()->parameters())->map(function ($value, $key) {
             $value = method_exists($value, 'getKey') ? $value->getKey() : $value;
             return [
-                'type' =>   gettype($value),
+                'type' => gettype($value),
                 'description' => '',
                 'example' => $value,
                 'required' => $this->isUrlParamRequired($key),
@@ -55,7 +55,7 @@ class ExampleRequest
             $value = head($value);
 
             return [
-                'type' =>   gettype($value).'[]',
+                'type' => gettype($value).'[]',
                 'description' => '',
                 'example' => [$value],
                 'required' => false,
