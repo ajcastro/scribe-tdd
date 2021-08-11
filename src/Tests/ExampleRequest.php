@@ -24,7 +24,7 @@ class ExampleRequest
     public function getUrlParams()
     {
         return collect($this->request->route()->parameters())->map(function ($value, $key) {
-            $value = method_exists($value, 'getKey') ? $value->getKey() : $value;
+            $value = is_object($value) && method_exists($value, 'getKey') ? $value->getKey() : $value;
             return [
                 'type' => gettype($value),
                 'description' => '',
