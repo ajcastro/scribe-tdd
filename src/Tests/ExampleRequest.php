@@ -86,6 +86,6 @@ class ExampleRequest
             $testMethod = substr($testMethod, 4);
         }
 
-        return trim(str_replace('_', ' ', snake_case($testMethod)));
+        return trim(str_replace('_', ' ', Str::snake($testMethod)));
     }
 }
