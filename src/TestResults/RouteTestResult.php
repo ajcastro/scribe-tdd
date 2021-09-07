@@ -26,21 +26,22 @@ class RouteTestResult
 
     public static function loadTestResults($dir)
     {
-        $result = [];
-        $files = File::files($dir);
-        $file = array_shift($files);
+        $result = [
+            'url_params'   => [],
+            'query_params' => [],
+            'body_params'  => [],
+            'responses'    => [],
+        ];
 
-        if ($file) {
-            $result = static::decodeFile($file->getPathname());
-        }
+        $files = File::files($dir);
 
         foreach($files as $file) {
             $array = static::decodeFile($file->getPathname());
 
-            $result['url_params'] = $result['url_params'] + $array['url_params'];
-            $result['query_params'] = $result['query_params'] + $array['query_params'];
-            $result['body_params'] = $result['body_params'] + $array['body_params'];
-            $result['responses'] = array_merge($result['responses'], $array['responses']);
+            $result['url_params'] = $result['url_params'] + ($array['url_params'] ?? []);
+            $result['query_params'] = $result['query_params'] + ($array['query_params'] ?? []);
+            $result['body_params'] = $result['body_params'] + ($array['body_params'] ?? []);
+            $result['responses'] = array_merge($result['responses'], $array['responses'] ?? []);
         }
 
         return $result;
