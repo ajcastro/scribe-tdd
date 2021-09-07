@@ -42,9 +42,14 @@ trait ScribeTddSetup
     {
         $instances = ExampleCreator::getInstances();
         foreach ($instances as $instance) {
-            File::makeDirectory($instance->writeDir($instance->route), 0755, true, true);
-            File::put($instance->writePath(), $instance->toJson(JSON_PRETTY_PRINT));
+            $writeDir = $instance->writeDir($instance->route);
+            File::makeDirectory($writeDir, 0755, true, true);
+
+            foreach ($instance->getWritables() as $filename => $writeData) {
+                File::put($writeDir."/".$filename, json_encode($writeData, JSON_PRETTY_PRINT));
+            };
         }
+
         ExampleCreator::flushInstances();
     }
 }
