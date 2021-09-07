@@ -195,16 +195,16 @@ class ExampleCreator implements Arrayable, Jsonable
     public function getWritables()
     {
         return [
-            "01-url_params@{$this->testMethod}.json" => [
+            "01-url_params-@{$this->testMethod}.json" => [
                 'url_params' => $this->mergeUrlParams(),
             ],
-            "02-query_params@{$this->testMethod}.json" => [
+            "02-query_params-@{$this->testMethod}.json" => [
                 'query_params' => $this->mergeQueryParams(),
             ],
-            "03-body_params@{$this->testMethod}.json" => [
+            "03-body_params-@{$this->testMethod}.json" => [
                 'body_params' => $this->mergeBodyParams(),
             ],
-            "04-responses@{$this->testMethod}.json" => [
+            "04-responses-@{$this->testMethod}.json" => [
                 'responses' => $this->mergeResponses(),
             ],
         ];
