@@ -2,8 +2,8 @@
 
 namespace AjCastro\ScribeTdd;
 
+use AjCastro\ScribeTdd\Commands\DeleteGeneratedFiles;
 use AjCastro\ScribeTdd\Tests\HttpExamples\HttpExampleCreatorMiddleware;
-use App\Console\Commands\DeleteGeneratedFiles;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Support\ServiceProvider;
 
