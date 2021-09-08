@@ -39,7 +39,7 @@ class DeleteGeneratedFiles extends Command
      */
     public function handle()
     {
-        File::allFiles(storage_path('scribe-tdd'))->reject(function ($file) {
+        collect(File::allFiles(storage_path('scribe-tdd')))->reject(function ($file) {
             return Str::endsWith($file->getPathname(), '-@.json');
         })->each(function ($file) {
             File::delete($file->getPathname());
