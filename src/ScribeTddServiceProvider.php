@@ -2,9 +2,10 @@
 
 namespace AjCastro\ScribeTdd;
 
+use AjCastro\ScribeTdd\Commands\DeleteGeneratedFiles;
+use AjCastro\ScribeTdd\Tests\HttpExamples\HttpExampleCreatorMiddleware;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Support\ServiceProvider;
-use AjCastro\ScribeTdd\Tests\HttpExamples\HttpExampleCreatorMiddleware;
 
 class ScribeTddServiceProvider extends ServiceProvider
 {
@@ -15,6 +16,12 @@ class ScribeTddServiceProvider extends ServiceProvider
         ], 'scribe-tdd-config');
 
         $this->mergeConfigFrom(__DIR__ . '/../config/scribe-tdd.php', 'scribe-tdd');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DeleteGeneratedFiles::class,
+            ]);
+        }
 
         if (
             $this->app->environment('testing') &&
