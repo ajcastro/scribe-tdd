@@ -45,6 +45,12 @@ class DeleteGeneratedFiles extends Command
             File::delete($file->getPathname());
         });
 
+        collect(File::directories(storage_path('scribe-tdd')))->filter(function ($dir) {
+            return collect(File::files($dir))->isEmpty();
+        })->each(function ($dir) {
+            File::deleteDirectory($dir);
+        });
+
         $this->info('Successfully deleted generated files from scribe-tdd. :-)');
     }
 }
