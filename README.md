@@ -93,6 +93,13 @@ phpunit
 php artisan scribe:generate
 ```
 
+### Step 3: Delete generated files
+When you run the `phpunit` tests, it creates a lot of files. You can delete these files when you already generated the api documentation by
+running the command below. This will not delete your created files, those which are ending in `-@.json`. You should commit your created files.
+```
+php artisan scribe:tdd:delete
+```
+
 ## Sample Usage
 
 Here is a sample project where it uses the tdd approach:
