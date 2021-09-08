@@ -41,7 +41,9 @@ class ExampleRequest
 
     public function getQueryParams()
     {
-        return collect()->wrap($this->request->query->all())->map([$this, 'mapParams'])->all();
+        return collect()->wrap($this->request->query->all())->map(function ($value) {
+            return QueryParamParser::parse($value);
+        })->filter()->all();
     }
 
     public function getBodyParams()
