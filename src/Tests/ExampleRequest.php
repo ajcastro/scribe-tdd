@@ -2,6 +2,8 @@
 
 namespace AjCastro\ScribeTdd\Tests;
 
+use AjCastro\ScribeTdd\Tests\ParamParsers\BodyParamParser;
+use AjCastro\ScribeTdd\Tests\ParamParsers\QueryParamParser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -41,35 +43,17 @@ class ExampleRequest
 
     public function getQueryParams()
     {
-        return collect()->wrap($this->request->query->all())->map(function ($value) {
-            return QueryParamParser::parse($value);
-        })->filter()->all();
+        return collect()->wrap($this->request->query->all())
+            ->map([QueryParamParser::class, 'parse'])
+            ->filter()
+            ->all();
     }
 
     public function getBodyParams()
     {
-        return collect()->wrap($this->request->request->all())->map([$this, 'mapParams'])->all();
-    }
-
-    public function mapParams($value)
-    {
-        if (is_array($value) && !empty($value)) {
-            $value = head($value);
-
-            return [
-                'type' => gettype($value).'[]',
-                'description' => '',
-                'example' => [$value],
-                'required' => false,
-            ];
-        }
-
-        return [
-            'type' =>   gettype($value),
-            'description' => '',
-            'example' => $value,
-            'required' => false,
-        ];
+        return collect()->wrap($this->request->request->all())
+            ->map([BodyParamParser::class, 'parse'])
+            ->all();
     }
 
     public function getResponse()

@@ -1,6 +1,6 @@
 <?php
 
-namespace AjCastro\ScribeTdd\Tests;
+namespace AjCastro\ScribeTdd\Tests\ParamParsers;
 
 use Illuminate\Support\Arr;
 
