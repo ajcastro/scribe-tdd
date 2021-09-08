@@ -45,6 +45,6 @@ class DeleteGeneratedFiles extends Command
             File::delete($file->getPathname());
         });
 
-        $this->success('Successfully deleted generated files from scribe-tdd. :-)');
+        $this->info('Successfully deleted generated files from scribe-tdd. :-)');
     }
 }
