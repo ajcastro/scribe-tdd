@@ -45,7 +45,7 @@ class ExampleRequest
     {
         return collect()->wrap($this->request->query->all())
             ->map([QueryParamParser::class, 'parse'])
-            ->filter()
+            ->filter() // currently removing null values, for example, nested objects is not yet supported that's why it returns null
             ->all();
     }
 
