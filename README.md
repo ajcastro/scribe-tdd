@@ -89,12 +89,13 @@ phpunit
 ```
 
 ### Step 2: Run scribe:generate
+Make sure to use `--force` to remove cached output.
 ```
-php artisan scribe:generate
+php artisan scribe:generate --force
 ```
 
 ### Step 3: Gitignore auto-generated json files
-Add the following to your `.gitignore` to ignore auto-generated json files. 
+Add the following to your `.gitignore` to ignore auto-generated json files.
 You should commit your created files, those which are ending in `-@.json`, so that it will always be applied when generating api documentation.
 ```
 storage/scribe-tdd/*/*
