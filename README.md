@@ -93,9 +93,16 @@ phpunit
 php artisan scribe:generate
 ```
 
-### Step 3: Delete generated files
+### Step 3: Gitignore auto-generated json files
+Add the following to your `.gitignore` to ignore auto-generated json files. 
+You should commit your created files, those which are ending in `-@.json`, so that it will always be applied when generating api documentation.
+```
+storage/scribe-tdd/*/*
+!storage/scribe-tdd/*/*-@.json
+```
+### Step 4: Delete auto-generated files (Optional)
 When you run the `phpunit` tests, it creates a lot of files. You can delete these files when you already generated the api documentation by
-running the command below. This will not delete your created files, those which are ending in `-@.json`. You should commit your created files.
+running the command below. This will not delete your created files.
 ```
 php artisan scribe:tdd:delete
 ```
