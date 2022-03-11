@@ -38,6 +38,7 @@ class RouteTestResult
         foreach($files as $file) {
             $array = static::decodeFile($file->getPathname());
 
+            $result = array_merge($result, $array);
             $result['url_params'] = $result['url_params'] + ($array['url_params'] ?? []);
             $result['query_params'] = $result['query_params'] + ($array['query_params'] ?? []);
             $result['body_params'] = $result['body_params'] + ($array['body_params'] ?? []);

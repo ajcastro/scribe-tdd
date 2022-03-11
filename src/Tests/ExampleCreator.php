@@ -122,7 +122,7 @@ class ExampleCreator implements Arrayable, Jsonable
         return static::writeDir($this->route).'/'.$this->id.'.json';
     }
 
-    public function toArray()
+    protected function getExtra()
     {
         return [
             'id'            => $this->id,
@@ -136,6 +136,12 @@ class ExampleCreator implements Arrayable, Jsonable
                 'name'    => $this->route->getName(),
                 'methods' => $this->route->methods,
             ],
+        ];
+    }
+
+    public function toArray()
+    {
+        return $this->getExtra() + [
             'url_params'   => $this->mergeUrlParams(),
             'query_params' => $this->mergeQueryParams(),
             'body_params'  => $this->mergeBodyParams(),
@@ -195,6 +201,7 @@ class ExampleCreator implements Arrayable, Jsonable
     public function getWritables()
     {
         return [
+            "00-extra-@{$this->testMethod}.json" => $this->getExtra(),
             "01-url_params-@{$this->testMethod}.json" => [
                 'url_params' => $this->mergeUrlParams(),
             ],
