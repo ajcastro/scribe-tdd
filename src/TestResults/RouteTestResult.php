@@ -27,6 +27,8 @@ class RouteTestResult
     public static function loadTestResults($dir)
     {
         $result = [
+            'test_class'   => '',
+            'test_method'  => '',
             'url_params'   => [],
             'query_params' => [],
             'body_params'  => [],
@@ -38,6 +40,9 @@ class RouteTestResult
         foreach($files as $file) {
             $array = static::decodeFile($file->getPathname());
 
+            $result['test_class'] = isset($array['test_class']) ? $array['test_class'] : $result['test_class'];
+            $result['test_method'] = isset($array['test_method']) ? $array['test_method'] : $result['test_method'];
+            
             $result['url_params'] = $result['url_params'] + ($array['url_params'] ?? []);
             $result['query_params'] = $result['query_params'] + ($array['query_params'] ?? []);
             $result['body_params'] = $result['body_params'] + ($array['body_params'] ?? []);
