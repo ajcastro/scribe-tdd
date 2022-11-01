@@ -9,7 +9,7 @@ use Knuckles\Scribe\Extracting\Strategies\ResponseFields\GetFromResponseFieldTag
 
 class GetFromResponseFieldTagFromScribeTdd extends GetFromResponseFieldTag
 {
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules = []): ?array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 

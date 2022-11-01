@@ -12,7 +12,7 @@ class AddPaginationParametersFromScribeTdd extends Strategy
 {
     use ParamHelpers;
 
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules = []): ?array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 
