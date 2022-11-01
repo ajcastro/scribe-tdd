@@ -7,7 +7,6 @@ use AjCastro\ScribeTdd\Tests\Traits\SetProps;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Str;
 
 class ExampleCreator implements Arrayable, Jsonable
 {

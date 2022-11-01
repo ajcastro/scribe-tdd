@@ -19,12 +19,13 @@ class GetFromBodyParamTagFromScribeTdd extends GetFromBodyParamTag
 
         [
             'method' => $methodDocBlock,
+            'class' => $classDocBlock
         ]
         = RouteDocBlocker::getDocBlocks($endpointData->route, [
             $testResult['test_class'],
             $testResult['test_method'],
         ]);
-
-        return $this->getBodyParametersFromDocBlock($methodDocBlock->getTags());
+    
+        return $this->getFromTags($methodDocBlock->getTags(), $classDocBlock?->getTags() ?: []);
     }
 }
