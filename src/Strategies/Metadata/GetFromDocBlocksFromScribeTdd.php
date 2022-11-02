@@ -9,7 +9,7 @@ use Knuckles\Scribe\Extracting\Strategies\Metadata\GetFromDocBlocks;
 
 class GetFromDocBlocksFromScribeTdd extends GetFromDocBlocks
 {
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules = []): array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 

@@ -9,7 +9,7 @@ use Knuckles\Scribe\Extracting\Strategies\UrlParameters\GetFromUrlParamTag;
 
 class GetFromUrlParamTagFromScribeTdd extends GetFromUrlParamTag
 {
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules = []): ?array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 
@@ -19,12 +19,13 @@ class GetFromUrlParamTagFromScribeTdd extends GetFromUrlParamTag
 
         [
             'method' => $methodDocBlock,
+            'class' => $classDocBlock
         ]
         = RouteDocBlocker::getDocBlocks($endpointData->route, [
             $testResult['test_class'],
             $testResult['test_method'],
         ]);
-
-        return $this->getUrlParametersFromDocBlock($methodDocBlock->getTags());
+    
+        return $this->getFromTags($methodDocBlock->getTags(), $classDocBlock?->getTags() ?: []);
     }
 }

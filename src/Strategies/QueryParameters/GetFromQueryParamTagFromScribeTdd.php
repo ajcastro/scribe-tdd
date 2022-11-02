@@ -9,7 +9,7 @@ use Knuckles\Scribe\Extracting\Strategies\QueryParameters\GetFromQueryParamTag;
 
 class GetFromQueryParamTagFromScribeTdd extends GetFromQueryParamTag
 {
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules = []): ?array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 
@@ -19,12 +19,13 @@ class GetFromQueryParamTagFromScribeTdd extends GetFromQueryParamTag
 
         [
             'method' => $methodDocBlock,
+            'class' => $classDocBlock
         ]
         = RouteDocBlocker::getDocBlocks($endpointData->route, [
             $testResult['test_class'],
             $testResult['test_method'],
         ]);
-
-        return $this->getQueryParametersFromDocBlock($methodDocBlock->getTags());
+    
+        return $this->getFromTags($methodDocBlock->getTags(), $classDocBlock?->getTags() ?: []);
     }
 }

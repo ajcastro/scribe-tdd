@@ -9,7 +9,7 @@ use Knuckles\Scribe\Extracting\Strategies\ResponseFields\GetFromResponseFieldTag
 
 class GetFromResponseFieldTagFromScribeTdd extends GetFromResponseFieldTag
 {
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): ?array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules = []): ?array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 
@@ -19,12 +19,13 @@ class GetFromResponseFieldTagFromScribeTdd extends GetFromResponseFieldTag
 
         [
             'method' => $methodDocBlock,
+            'class' => $classDocBlock
         ]
         = RouteDocBlocker::getDocBlocks($endpointData->route, [
             $testResult['test_class'],
             $testResult['test_method'],
         ]);
-
-        return $this->getResponseFieldsFromDocBlock($methodDocBlock->getTags(), $endpointData->responses);
+    
+        return $this->getFromTags($methodDocBlock->getTags(), $classDocBlock?->getTags() ?: []);
     }
 }

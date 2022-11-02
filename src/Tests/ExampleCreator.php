@@ -7,7 +7,6 @@ use AjCastro\ScribeTdd\Tests\Traits\SetProps;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Str;
 
 class ExampleCreator implements Arrayable, Jsonable
 {
@@ -18,6 +17,7 @@ class ExampleCreator implements Arrayable, Jsonable
     public $testMethod;
     public $dataName;
     public $providedData;
+    public $description;
     public Route $route;
 
     private $exampleRequests;
@@ -130,6 +130,7 @@ class ExampleCreator implements Arrayable, Jsonable
             'test_method'   => $this->testMethod,
             'data_name'     => $this->dataName,
             'provided_data' => $this->providedData,
+            'description'   => $this->description,
             'key'           => $this->instanceKey(),
             'route' => [
                 'uri'     => $this->route->uri,

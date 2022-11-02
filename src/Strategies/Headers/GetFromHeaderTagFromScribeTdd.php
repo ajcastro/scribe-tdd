@@ -9,7 +9,7 @@ use Knuckles\Scribe\Extracting\Strategies\Headers\GetFromHeaderTag;
 
 class GetFromHeaderTagFromScribeTdd extends GetFromHeaderTag
 {
-    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules): array
+    public function __invoke(ExtractedEndpointData $endpointData, array $routeRules = []): array
     {
         $testResult = RouteTestResult::getTestResultForRoute($endpointData->route);
 
@@ -19,12 +19,13 @@ class GetFromHeaderTagFromScribeTdd extends GetFromHeaderTag
 
         [
             'method' => $methodDocBlock,
+            'class' => $classDocBlock
         ]
         = RouteDocBlocker::getDocBlocks($endpointData->route, [
             $testResult['test_class'],
             $testResult['test_method'],
         ]);
-
-        return $this->getHeadersFromDocBlock($methodDocBlock->getTags());
+    
+        return $this->getFromTags($methodDocBlock->getTags(), $classDocBlock?->getTags() ?: []);
     }
 }
