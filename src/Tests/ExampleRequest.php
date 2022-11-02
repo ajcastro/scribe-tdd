@@ -61,17 +61,8 @@ class ExampleRequest
         return [
             'status' => $statusCode = $this->response->getStatusCode(),
             'headers' => $this->response->headers->all(),
-            'description' => $statusCode.', '.static::guessResponseDescription($this->exampleCreator->testMethod),
+            'description' => $statusCode.', '.$this->exampleCreator->description,
             'content' => (string) $this->response->getContent(),
         ];
-    }
-
-    private static function guessResponseDescription($testMethod)
-    {
-        if (Str::startsWith($testMethod, 'test')) {
-            $testMethod = substr($testMethod, 4);
-        }
-
-        return trim(str_replace('_', ' ', Str::snake($testMethod)));
     }
 }

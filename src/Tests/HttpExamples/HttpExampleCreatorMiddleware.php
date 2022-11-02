@@ -3,8 +3,6 @@
 namespace AjCastro\ScribeTdd\Tests\HttpExamples;
 
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Testing\TestResponse;
 use AjCastro\ScribeTdd\Tests\ExampleCreator;
 use AjCastro\ScribeTdd\Tests\ExampleRequest;
 

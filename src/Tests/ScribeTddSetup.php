@@ -3,7 +3,10 @@
 namespace AjCastro\ScribeTdd\Tests;
 
 use AjCastro\ScribeTdd\Exceptions\LaravelNotPresent;
+use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\File;
+use PHPUnit\Util\Test as TestUtil;
+use Str;
 
 trait ScribeTddSetup
 {
@@ -18,7 +21,9 @@ trait ScribeTddSetup
         }
 
         $this->afterApplicationCreated(function () {
-            $this->makeExample();
+            if (!$this->shouldSkipExample()) {
+              $this->makeExample();
+            }
         });
 
         $this->beforeApplicationDestroyed(function () {
@@ -28,11 +33,13 @@ trait ScribeTddSetup
 
     private function makeExample(): void
     {
+        /** @var TestCase $this */
         $exampleCreator = new ExampleCreator([
             'test'         => $this,
             'testMethod'   => $this->getName(false),
             'dataName'     => $this->dataName(),
             'providedData' => $this->getProvidedData(),
+            'description'  => $this->guessResponseDescription($this->getName(false)),
         ]);
 
         ExampleCreator::setCurrentInstance($exampleCreator);
@@ -51,5 +58,35 @@ trait ScribeTddSetup
         }
 
         ExampleCreator::flushInstances();
+    }
+
+    private function shouldSkipExample(): bool
+    {
+        return !is_null($this->getAnnotation($this->getName(false), 'scribeSkip'));
+    }
+
+    private function guessResponseDescription($testMethod)
+    {
+        $description = $this->getAnnotation($testMethod, 'scribeDescription')[0] ?? null;
+
+        if ($description) {
+            return $description;
+        }
+
+        if (Str::startsWith($testMethod, 'test')) {
+            $testMethod = substr($testMethod, 4);
+        }
+
+        return trim(str_replace('_', ' ', Str::snake($testMethod)));
+    }
+
+    private function getAnnotation($testMethod, $name): ?array
+    {
+        $annotations = TestUtil::parseTestMethodAnnotations(
+            static::class,
+            $testMethod
+        );
+        
+        return $annotations['method'][$name] ?? null;
     }
 }
