@@ -5,6 +5,7 @@ namespace AjCastro\ScribeTdd\Tests;
 use AjCastro\ScribeTdd\Exceptions\LaravelNotPresent;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\File;
+use PHPUnit\Metadata\Parser\Registry;
 use PHPUnit\Util\Test as TestUtil;
 use Str;
 
@@ -36,10 +37,10 @@ trait ScribeTddSetup
         /** @var TestCase $this */
         $exampleCreator = new ExampleCreator([
             'test'         => $this,
-            'testMethod'   => $this->getName(false),
+            'testMethod'   => $this->name(false),
             'dataName'     => $this->dataName(),
-            'providedData' => $this->getProvidedData(),
-            'description'  => $this->guessResponseDescription($this->getName(false)),
+            'providedData' => $this->providedData(),
+            'description'  => $this->guessResponseDescription($this->name(false)),
         ]);
 
         ExampleCreator::setCurrentInstance($exampleCreator);
@@ -62,7 +63,7 @@ trait ScribeTddSetup
 
     private function shouldSkipExample(): bool
     {
-        return !is_null($this->getAnnotation($this->getName(false), 'scribeSkip'));
+        return !is_null($this->getAnnotation($this->name(false), 'scribeSkip'));
     }
 
     private function guessResponseDescription($testMethod)
@@ -82,11 +83,36 @@ trait ScribeTddSetup
 
     private function getAnnotation($testMethod, $name): ?array
     {
-        $annotations = TestUtil::parseTestMethodAnnotations(
+        $annotations = self::parseTestMethodAnnotations(
             static::class,
             $testMethod
         );
-        
+
         return $annotations['method'][$name] ?? null;
+    }
+
+    /**
+     * @psalm-param class-string $className
+     */
+    public static function parseTestMethodAnnotations(string $className, ?string $methodName = ''): array
+    {
+
+        $registry = \PHPUnit\Metadata\Annotation\Parser\Registry::getInstance();
+
+        if ($methodName !== null) {
+            try {
+                return [
+                    'method' => $registry->forMethod($className, $methodName)->symbolAnnotations(),
+                    'class'  => $registry->forClassName($className)->symbolAnnotations(),
+                ];
+            } catch (Exception $methodNotFound) {
+                // ignored
+            }
+        }
+
+        return [
+            'method' => null,
+            'class'  => $registry->forClassName($className)->symbolAnnotations(),
+        ];
     }
 }
