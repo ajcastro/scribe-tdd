@@ -9,7 +9,9 @@
             "email": "ajcastro29@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "phpunit/phpunit": "^10.0"
+    },
     "autoload": {
         "psr-4": {
             "AjCastro\\ScribeTdd\\": "src/"
