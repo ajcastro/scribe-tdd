@@ -3,8 +3,10 @@
 namespace AjCastro\ScribeTdd\Tests;
 
 use AjCastro\ScribeTdd\Exceptions\LaravelNotPresent;
+use Exception;
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\File;
+use PHPUnit\Metadata\Annotation\Parser\Registry;
 use PHPUnit\Util\Test as TestUtil;
 use Str;
 
@@ -82,11 +84,57 @@ trait ScribeTddSetup
 
     private function getAnnotation($testMethod, $name): ?array
     {
-        $annotations = TestUtil::parseTestMethodAnnotations(
+        $annotations = self::parseTestMethodAnnotations(
             static::class,
             $testMethod
         );
         
         return $annotations['method'][$name] ?? null;
+    }
+
+    public function getName(bool $withDataSet = true): string
+    {
+        try {
+            return parent::getName($withDataSet);
+        } catch (\Throwable) {
+            return $this->name();
+        }
+    }
+
+    public function getProvidedData(): array
+    {
+        try {
+            return parent::getProvidedData();
+        } catch (\Throwable) {
+            return $this->providedData();
+        }
+    }
+
+    public static function parseTestMethodAnnotations(string $className, ?string $methodName = null): array
+    {
+        if (method_exists(TestUtil::class, 'parseTestMethodAnnotations')) {
+            return TestUtil::parseTestMethodAnnotations(
+                static::class,
+                $methodName
+            );
+        }
+
+        $registry = \PHPUnit\Metadata\Annotation\Parser\Registry::getInstance();
+
+        if ($methodName !== null) {
+            try {
+                return [
+                    'method' => $registry->forMethod($className, $methodName)->symbolAnnotations(),
+                    'class'  => $registry->forClassName($className)->symbolAnnotations(),
+                ];
+            } catch (Exception $methodNotFound) {
+                // ignored
+            }
+        }
+
+        return [
+            'method' => null,
+            'class'  => $registry->forClassName($className)->symbolAnnotations(),
+        ];
     }
 }
